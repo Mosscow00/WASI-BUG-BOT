@@ -61,7 +61,7 @@ const {  state, saveCreds } =await useMultiFileAuthState(`./session`)
       defaultQueryTimeoutMs: undefined, // for this issues https://github.com/WhiskeySockets/Baileys/issues/276
    })
    
-   store.bind(XeonBotInc.ev)
+   store.bind(Yy_BotInc.ev)
 
     // login use pairing code
    // source code https://github.com/WhiskeySockets/Baileys/blob/master/Example/example.ts#L61
@@ -97,7 +97,7 @@ const {  state, saveCreds } =await useMultiFileAuthState(`./session`)
       }, 3000)
    }
 
-    XeonBotInc.ev.on('messages.upsert', async chatUpdate => {
+    YyBotInc.ev.on('messages.upsert', async chatUpdate => {
         //console.log(JSON.stringify(chatUpdate, undefined, 2))
         try {
             const mek = chatUpdate.messages[0]
@@ -114,7 +114,7 @@ const {  state, saveCreds } =await useMultiFileAuthState(`./session`)
     })
     
     //autostatus view
-        XeonBotInc.ev.on('messages.upsert', async chatUpdate => {
+        YyBotInc.ev.on('messages.upsert', async chatUpdate => {
         	if (global.autoswview){
             mek = chatUpdate.messages[0]
             if (mek.key && mek.key.remoteJid === 'status@broadcast') {
@@ -123,7 +123,7 @@ const {  state, saveCreds } =await useMultiFileAuthState(`./session`)
     })
 
    
-    XeonBotInc.decodeJid = (jid) => {
+    YyBotInc.decodeJid = (jid) => {
         if (!jid) return jid
         if (/:\d+@/gi.test(jid)) {
             let decode = jidDecode(jid) || {}
@@ -131,9 +131,9 @@ const {  state, saveCreds } =await useMultiFileAuthState(`./session`)
         } else return jid
     }
 
-    XeonBotInc.ev.on('contacts.update', update => {
+    YyBotInc.ev.on('contacts.update', update => {
         for (let contact of update) {
-            let id = XeonBotInc.decodeJid(contact.id)
+            let id = YyBotInc.decodeJid(contact.id)
             if (store && store.contacts) store.contacts[id] = {
                 id,
                 name: contact.notify
@@ -141,35 +141,35 @@ const {  state, saveCreds } =await useMultiFileAuthState(`./session`)
         }
     })
 
-    XeonBotInc.getName = (jid, withoutContact = false) => {
-        id = XeonBotInc.decodeJid(jid)
-        withoutContact = XeonBotInc.withoutContact || withoutContact
+    YyBotInc.getName = (jid, withoutContact = false) => {
+        id = YyBotInc.decodeJid(jid)
+        withoutContact = YyBotInc.withoutContact || withoutContact
         let v
         if (id.endsWith("@g.us")) return new Promise(async (resolve) => {
             v = store.contacts[id] || {}
-            if (!(v.name || v.subject)) v = XeonBotInc.groupMetadata(id) || {}
+            if (!(v.name || v.subject)) v = YyBotInc.groupMetadata(id) || {}
             resolve(v.name || v.subject || PhoneNumber('+' + id.replace('@s.whatsapp.net', '')).getNumber('international'))
         })
         else v = id === '0@s.whatsapp.net' ? {
                 id,
                 name: 'WhatsApp'
-            } : id === XeonBotInc.decodeJid(XeonBotInc.user.id) ?
-            XeonBotInc.user :
+            } : id === YyBotInc.decodeJid(YyBotInc.user.id) ?
+            YyBotInc.user :
             (store.contacts[id] || {})
         return (withoutContact ? '' : v.name) || v.subject || v.verifiedName || PhoneNumber('+' + jid.replace('@s.whatsapp.net', '')).getNumber('international')
     }
     
-    XeonBotInc.public = true
+    YyBotInc.public = true
 
-    XeonBotInc.serializeM = (m) => smsg(XeonBotInc, m, store)
+    YyBotInc.serializeM = (m) => smsg(YyBotInc, m, store)
 
-XeonBotInc.ev.on("connection.update",async  (s) => {
-        const { connection, lastDisconnect } = s
+YyBotInc.ev.on("connection.update",async  (s) => {
+       const { connection, lastDisconnect } = s
         if (connection == "open") {
         	console.log(chalk.magenta(` `))
-            console.log(chalk.yellow(`🌿Connected to => ` + JSON.stringify(XeonBotInc.user, null, 2)))
+            console.log(chalk.yellow(`🌿Connected to => ` + JSON.stringify(YyBotInc.user, null, 2)))
 			await delay(1999)
-            console.log(chalk.yellow(`\n\n                  ${chalk.bold.blue(`[ wasibugv1ᵇᵘᵍ ᵇᵒᵗ ]`)}\n\n`))
+            console.log(chalk.yellow(`\n\n                  ${chalk.bold.blue(`[ Yy Bug MoDzᵇᵘᵍ ᵇᵒᵗ ]`)}\n\n`))
             console.log(chalk.cyan(`< ================================================== >`))
 	        console.log(chalk.magenta(`\n${themeemoji} Telegram CHANNEL:@Yy ModzZ`))
             console.log(chalk.magenta(`${themeemoji} GITHUB: Private `))
@@ -183,27 +183,27 @@ XeonBotInc.ev.on("connection.update",async  (s) => {
             lastDisconnect.error &&
             lastDisconnect.error.output.statusCode != 401
         ) {
-            startXeonBotInc()
+            startYyBotInc()
         }
     })
-    XeonBotInc.ev.on('creds.update', saveCreds)
-    XeonBotInc.ev.on("messages.upsert",  () => { })
+    YyBotInc.ev.on('creds.update', saveCreds)
+    YyBotInc.ev.on("messages.upsert",  () => { })
 
-    XeonBotInc.sendText = (jid, text, quoted = '', options) => XeonBotInc.sendMessage(jid, {
+    XeonBotInc.sendText = (jid, text, quoted = '', options) => Yy BotInc.sendMessage(jid, {
         text: text,
         ...options
     }, {
         quoted,
         ...options
     })
-    XeonBotInc.sendTextWithMentions = async (jid, text, quoted, options = {}) => XeonBotInc.sendMessage(jid, {
+    YyBotInc.sendTextWithMentions = async (jid, text, quoted, options = {}) => Yy BotInc.sendMessage(jid, {
         text: text,
         mentions: [...text.matchAll(/@(\d{0,16})/g)].map(v => v[1] + '@s.whatsapp.net'),
         ...options
     }, {
         quoted
     })
-    XeonBotInc.sendImageAsSticker = async (jid, path, quoted, options = {}) => {
+    YyBotInc.sendImageAsSticker = async (jid, path, quoted, options = {}) => {
         let buff = Buffer.isBuffer(path) ? path : /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,` [1], 'base64') : /^https?:\/\//.test(path) ? await (await getBuffer(path)) : fs.existsSync(path) ? fs.readFileSync(path) : Buffer.alloc(0)
         let buffer
         if (options && (options.packname || options.author)) {
@@ -212,7 +212,7 @@ XeonBotInc.ev.on("connection.update",async  (s) => {
             buffer = await imageToWebp(buff)
         }
 
-        await XeonBotInc.sendMessage(jid, {
+        await YyBotInc.sendMessage(jid, {
             sticker: {
                 url: buffer
             },
@@ -241,7 +241,7 @@ XeonBotInc.ev.on("connection.update",async  (s) => {
         })
         return buffer
     }
-    XeonBotInc.downloadAndSaveMediaMessage = async (message, filename, attachExtension = true) => {
+    YyBotInc.downloadAndSaveMediaMessage = async (message, filename, attachExtension = true) => {
         let quoted = message.msg ? message.msg : message
         let mime = (message.msg || message).mimetype || ''
         let messageType = message.mtype ? message.mtype.replace(/Message/gi, '') : mime.split('/')[0]
@@ -257,7 +257,7 @@ XeonBotInc.ev.on("connection.update",async  (s) => {
         return trueFileName
     }
 
-    XeonBotInc.downloadMediaMessage = async (message) => {
+    YyInc.downloadMediaMessage = async (message) => {
         let mime = (message.msg || message).mimetype || ''
         let messageType = message.mtype ? message.mtype.replace(/Message/gi, '') : mime.split('/')[0]
         const stream = await downloadContentFromMessage(message, messageType)
@@ -269,7 +269,7 @@ XeonBotInc.ev.on("connection.update",async  (s) => {
         return buffer
     }
     }
-return startXeonBotInc()
+return startYyBotInc()
 
 let file = require.resolve(__filename)
 fs.watchFile(file, () => {
