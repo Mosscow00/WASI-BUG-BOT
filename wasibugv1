@@ -58,22 +58,22 @@ const xtime = moment.tz('Asia/Kolkata').format('HH:mm:ss')
         const xdate = moment.tz('Asia/Kolkata').format('DD/MM/YYYY')
         const time2 = moment().tz('Asia/Kolkata').format('HH:mm:ss')  
          if(time2 < "23:59:00"){
-var xeonytimewisher = `Good Night ðŸŒŒ`
+var xeonytimewisher = `Good Night`
  }
  if(time2 < "19:00:00"){
-var xeonytimewisher = `Good Evening ðŸŒƒ`
+var xeonytimewisher = `Good Evening`
  }
  if(time2 < "18:00:00"){
-var xeonytimewisher = `Good Evening ðŸŒƒ`
+var xeonytimewisher = `Good Evening`
  }
  if(time2 < "15:00:00"){
-var xeonytimewisher = `Good Afternoon ðŸŒ…`
+var xeonytimewisher = `Good Afternoon`
  }
  if(time2 < "11:00:00"){
-var xeonytimewisher = `Good Morning ðŸŒ„`
+var xeonytimewisher = `Good Morning`
  }
  if(time2 < "05:00:00"){
-var xeonytimewisher = `Good Morning ðŸŒ„`
+var xeonytimewisher = `Good Morning`
  } 
 module.exports = XeonBotInc = async (XeonBotInc, m, msg, chatUpdate, store) => {
     try {
